@@ -45,8 +45,5 @@ Return only the revised draft.
             st.subheader("Revised Draft")
             st.write(revised_text)
 
-        # ✅ Catch all OpenAI errors safely
-        except openai.error.OpenAIError as e:
-            st.error(f"OpenAI API error: {e}")
         except Exception as e:
-            st.error(f"An unexpected error occurred: {e}")
+            st.error(f"An error occurred: {e}")
