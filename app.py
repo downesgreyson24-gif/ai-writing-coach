@@ -43,5 +43,3 @@ Return only the revised draft.
 
         st.subheader("Revised Draft")
         st.write(revised_text)
-
-Add OpenAI revision functionality
