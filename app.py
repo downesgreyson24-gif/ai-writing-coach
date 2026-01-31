@@ -1,6 +1,7 @@
 import os
 import openai
 import streamlit as st
+from openai.error import RateLimitError, AuthenticationError  # ✅ import exceptions
 
 # Read OpenAI API key from Streamlit Secrets
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -49,9 +50,9 @@ Return only the revised draft.
             st.subheader("Revised Draft")
             st.write(revised_text)
 
-        except openai.error.RateLimitError:
+        except RateLimitError:
             st.error("OpenAI rate limit exceeded. Please wait a minute and try again.")
-        except openai.error.AuthenticationError:
+        except AuthenticationError:
             st.error("API key is invalid or missing. Check your Streamlit Secrets.")
         except Exception as e:
             st.error(f"An unexpected error occurred: {e}")
