@@ -1,12 +1,13 @@
 import os
 import openai
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
 import streamlit as st
+
+# Read OpenAI API key from Streamlit Secrets
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 st.title("AI Writing Coach (Beta)")
 
+# Text areas for input
 student_text = st.text_area("Paste previous student writing:")
 draft_text = st.text_area("Paste current draft:")
 
@@ -14,6 +15,7 @@ if st.button("Revise"):
     if student_text.strip() == "" or draft_text.strip() == "":
         st.warning("Please paste both texts.")
     else:
+        # Prompt for the AI
         prompt = f"""
 You are a writing coach.
 
@@ -33,13 +35,17 @@ Revise the current draft to:
 Return only the revised draft.
 """
 
-       response = openai.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[{"role": "user", "content": prompt}],
-    temperature=0.4
-)
+        # ✅ Call OpenAI API using GPT-3.5-turbo
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.4
+        )
 
+        # Extract revised text
         revised_text = response.choices[0].message.content
 
+        # Display revised draft
         st.subheader("Revised Draft")
         st.write(revised_text)
+        
